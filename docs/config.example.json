@@ -1,0 +1,11 @@
+{
+  "include_defaults": true,
+  "sources": [
+    {
+      "name": "Additional Claude transcripts",
+      "kind": "claude",
+      "path": "/absolute/path/to/extra/projects",
+      "surface": "unknown"
+    }
+  ]
+}

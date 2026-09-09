@@ -1,0 +1,82 @@
+/* Evidence remains in the dashboard's secondary panels. All selectors here are
+   scoped to this component; the daily ccusage table and annual chart retain
+   their existing layout. Status labels accompany every color distinction. */
+.ev-list { padding:0 24px 18px; }
+.ev-item { border-top:1px solid var(--line); }
+.ev-item > .ev-item-summary { display:block; position:relative; padding:17px 26px 17px 0; cursor:pointer; list-style:none; }
+.ev-item > .ev-item-summary::-webkit-details-marker { display:none; }
+.ev-item > .ev-item-summary::after { content:"+"; position:absolute; top:19px; right:1px; color:var(--muted); font-size:17px; line-height:1; }
+.ev-item[open] > .ev-item-summary::after { content:"−"; }
+.ev-item > .ev-item-summary:hover { color:var(--green); }
+.ev-topline { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px 16px; }
+.ev-time { color:var(--ink); font-size:12px; font-weight:600; font-variant-numeric:tabular-nums; }
+.ev-state { border-radius:5px; background:#f1f2ee; padding:3px 7px; font-size:10px; color:var(--muted); }
+.ev-state-included { background:var(--green-soft); color:var(--green); }
+.ev-state-review { background:#fff3df; color:var(--amber); }
+.ev-byline { color:var(--muted); font-size:10px; margin-top:5px; }
+.ev-metrics { display:flex; align-items:baseline; flex-wrap:wrap; gap:6px 18px; color:var(--ink); font-size:11px; margin-top:9px; font-variant-numeric:tabular-nums; }
+.ev-metric-label { color:var(--muted); margin-right:3px; }
+.ev-metrics strong { font-weight:650; }
+.ev-included { color:var(--green); }
+.ev-broader-preview { color:var(--muted); font-size:10px; line-height:1.6; margin-top:7px; overflow-wrap:anywhere; }
+.ev-item-body { padding:0 0 20px; }
+.ev-muted { color:var(--muted); font-size:11px; line-height:1.65; margin:6px 0 12px; }
+.ev-reason { color:var(--ink); font-size:11px; line-height:1.65; margin:0 0 7px; overflow-wrap:anywhere; }
+.ev-review-copy { color:var(--amber); }
+.ev-table-scroll { overflow-x:auto; max-width:100%; border:1px solid var(--line); border-radius:8px; overscroll-behavior-x:contain; }
+.ev-list table { width:100%; white-space:nowrap; }
+.ev-list th,.ev-list td { padding:10px 12px; font-size:10px; }
+.ev-list th:first-child,.ev-list td:first-child { padding-left:13px; }
+.ev-list th:last-child,.ev-list td:last-child { padding-right:13px; }
+.ev-list tbody th { background:transparent; border-top:0; color:var(--ink); font-weight:500; }
+.ev-list thead th { border-top:0; }
+.ev-list tbody tr:last-child th { border-bottom:0; }
+.ev-list .ev-total-row th,.ev-list .ev-total-row td { background:var(--green-soft); color:var(--green); font-weight:650; border-top:1px solid var(--line); }
+.ev-model-section { margin:20px 0; }
+.ev-model-section h4 { font-size:12px; font-weight:600; margin:0 0 5px; }
+.ev-model-section > p { max-width:720px; }
+.ev-list .ev-model-name { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-weight:500; }
+.ev-provenance { margin-top:16px; }
+.ev-provenance > summary { display:list-item; padding:3px 0; cursor:pointer; color:var(--muted); font-size:10px; }
+.ev-facts { display:grid; grid-template-columns:minmax(120px,160px) minmax(0,1fr); gap:7px 18px; margin:12px 0; font-size:10px; }
+.ev-facts dt { color:var(--muted); overflow-wrap:anywhere; }
+.ev-facts dd { color:var(--ink); margin:0; overflow-wrap:anywhere; font-variant-numeric:tabular-nums; }
+.ev-facts code,.ev-sources code { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:10px; overflow-wrap:anywhere; white-space:normal; }
+.ev-source-label { color:var(--muted); margin:14px 0 6px; font-size:10px; }
+.ev-sources { margin:0; padding:0 0 0 16px; color:var(--muted); }
+.ev-sources li { margin:5px 0; }
+.ev-provider { color:var(--muted); font-size:10px; }
+.ev-window-line { display:flex; flex-wrap:wrap; gap:8px 20px; margin-top:9px; }
+.ev-window { display:inline-flex; flex-wrap:wrap; gap:3px 6px; align-items:baseline; color:var(--muted); font-size:11px; }
+.ev-window strong { color:var(--ink); font-weight:600; font-variant-numeric:tabular-nums; }
+.ev-quota-status { color:var(--muted); margin-top:7px; font-size:10px; }
+.ev-empty { border-top:1px solid var(--line); padding:20px 0 3px; }
+.ev-empty p { color:var(--muted); font-size:11px; line-height:1.7; max-width:600px; margin:0; }
+.ev-pagination { display:flex; justify-content:center; border-top:1px solid var(--line); padding:17px 0 1px; }
+.ev-pagination button { font-size:11px; }
+.ev-list :focus-visible { outline:3px solid #759fc9; outline-offset:3px; }
+@media (max-width:700px) {
+  .ev-list { padding:0 18px 15px; }
+  .ev-item > .ev-item-summary { padding-top:15px; padding-bottom:15px; }
+  .ev-topline { align-items:flex-start; gap:7px; }
+  .ev-time { font-size:11px; }
+  .ev-state { font-size:9px; }
+  .ev-metrics { gap:6px 12px; font-size:10px; }
+  .ev-window-line { display:grid; grid-template-columns:1fr; gap:7px; }
+  .ev-facts { grid-template-columns:115px minmax(0,1fr); gap:7px 12px; }
+  .ev-list th,.ev-list td { padding:9px 10px; }
+  .ev-provenance > summary { padding:5px 0; }
+}
+@media (prefers-reduced-motion:reduce) { .ev-list * { scroll-behavior:auto; } }
+
+/* Version tables are created on first expansion. Individual versions retain
+   their own native counts; a timeline never displays an accumulated total. */
+.ev-revision-list { border-left:2px solid var(--line); margin:12px 0 4px 3px; padding-left:16px; }
+.ev-revision { border-top:1px solid var(--line); padding:15px 0 4px; }
+.ev-revision h5 { margin:0 0 8px; font-size:11px; font-weight:600; }
+.ev-revision h5 > span { color:var(--muted); font-weight:400; }
+.ev-revision-counts { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:9px; margin:10px 0 16px; }
+.ev-revision-counts > div { background:#f7f9f4; border:1px solid var(--line); border-radius:6px; padding:9px 11px; }
+.ev-revision-counts dt { font-size:9px; color:var(--muted); margin-bottom:3px; }
+.ev-revision-counts dd { font-size:11px; margin:0; font-weight:600; font-variant-numeric:tabular-nums; }
+.ev-revision .ev-model-section h4 { font-size:11px; }
