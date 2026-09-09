@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f5f5ef">
+  <title>Usage Tracker · Daily usage</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/chart.css">
+  <link rel="stylesheet" href="/evidence.css">
+  <script src="/chart.js" defer></script>
+  <script src="/evidence.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to usage</a>
+  <div class="app-shell">
+    <header class="app-header">
+      <a class="brand" href="/" aria-label="Usage Tracker home"><span class="brand-mark" aria-hidden="true">∥</span>Usage Tracker</a>
+      <div class="header-meta"><span class="local-label">On this Mac</span><span id="health" class="status-pill" role="status"><span class="status-dot"></span><span id="health-label">Connecting</span></span></div>
+    </header>
+    <main id="main">
+      <div class="page-heading">
+        <div><p class="eyebrow">LOCAL AI ACTIVITY</p><h1>Daily usage</h1><p class="intro">Input, output, and cache. Every day, by app and model.</p></div>
+        <button id="refresh" class="button refresh-button" type="button"><span aria-hidden="true">↻</span><span id="refresh-label">Refresh</span></button>
+      </div>
+      <div id="error-banner" class="notice error-notice" role="alert" hidden></div>
+      <div class="filter-bar" aria-label="Usage filters">
+        <div class="filter month-filter"><label for="month">Report month</label><div class="month-navigation"><button id="previous-month" type="button" aria-label="Previous month">‹</button><input id="month" type="month" aria-label="Report month"><button id="next-month" type="button" aria-label="Next month">›</button></div></div>
+        <div class="filter"><label for="provider">Provider</label><select id="provider"><option value="all">All providers</option></select></div>
+        <div class="filter"><label for="surface">App or surface</label><select id="surface"><option value="all">All surfaces</option></select></div>
+        <div class="filter"><label for="model">Model</label><select id="model"><option value="all">All models</option></select></div>
+        <div class="filter"><label for="quality">Evidence</label><select id="quality"><option value="reported">Reported logs</option><option value="estimated">Text estimates</option></select></div>
+        <button id="reset-filters" class="text-button" type="button" hidden>Reset</button>
+      </div>
+      <div id="report-content" aria-busy="true">
+        <section class="month-summary" aria-label="Selected month totals">
+          <div class="summary-primary"><span id="summary-label">Reported this month</span><strong id="month-total">—</strong><small id="month-events">Loading usage…</small></div>
+          <div><span><i class="category-dot input-dot"></i>Uncached input</span><strong id="month-input">—</strong></div>
+          <div><span><i class="category-dot output-dot"></i>Output</span><strong id="month-output">—</strong></div>
+          <div class="cache-summary"><span><i class="category-dot cache-write-dot"></i>Cache writes</span><strong id="month-write">—</strong></div>
+          <div class="cache-summary"><span><i class="category-dot cache-read-dot"></i>Cache reads</span><strong id="month-read">—</strong></div>
+        </section>
+        <section class="panel daily-panel" aria-labelledby="daily-heading">
+          <div class="section-heading"><div><h2 id="daily-heading">Daily report</h2><p id="daily-period">Loading selected month…</p></div><label class="detail-toggle"><input id="show-apps" type="checkbox" checked> App details</label></div>
+          <div id="daily-empty" class="empty-state" hidden><h3>No usage recorded for this month</h3><p id="daily-empty-copy">Choose another month or check source coverage below.</p></div>
+          <div id="daily-table-wrap" class="table-scroll daily-scroll" tabindex="0" aria-label="Daily usage table, scroll for more dates or columns">
+            <table class="daily-table">
+              <caption class="visually-hidden">Daily totals followed by app rows. Uncached input, output, cache writes, and cache reads are disjoint categories.</caption>
+              <thead><tr><th scope="col">Date</th><th scope="col">App</th><th scope="col">Models</th><th scope="col" class="number"><i class="category-dot input-dot"></i><span id="input-heading">Input (uncached)</span></th><th scope="col" class="number"><i class="category-dot output-dot"></i>Output</th><th scope="col" class="number"><i class="category-dot cache-write-dot"></i>Cache write</th><th scope="col" class="number"><i class="category-dot cache-read-dot"></i>Cache read</th><th scope="col" class="number">Total tokens</th></tr></thead>
+              <tbody id="daily-body"><tr><td colspan="8" class="table-loading">Loading daily usage…</td></tr></tbody>
+              <tfoot id="daily-total"></tfoot>
+            </table>
+          </div>
+          <p id="accounting-note" class="accounting-note">Total = uncached input + output + cache writes + cache reads. Output includes reasoning. Unknown counts remain unknown.</p>
+        </section>
+        <section class="panel annual-panel" aria-labelledby="annual-heading">
+          <div class="section-heading"><div><h2 id="annual-heading">Monthly usage</h2><p id="annual-description">One bar per month, with cache and input/output shown separately.</p></div><div class="year-control"><label for="chart-year">Year</label><input id="chart-year" type="number" min="1970" max="9998" step="1" aria-label="Chart year"></div></div>
+          <div id="chart-container" class="annual-chart"><div class="chart-placeholder"><p>Loading the year’s activity…</p></div></div>
+          <details id="chart-data" class="chart-data"><summary>View monthly numbers</summary><div class="table-scroll"><table><caption class="visually-hidden">Monthly token categories for the selected evidence type</caption><thead><tr><th scope="col">Month</th><th scope="col" class="number">Input</th><th scope="col" class="number">Output</th><th scope="col" class="number">Cache write</th><th scope="col" class="number">Cache read</th><th scope="col" class="number">Total tokens</th></tr></thead><tbody id="chart-data-body"></tbody></table></div></details>
+        </section>
+        <details class="panel secondary-panel" id="reconciliation-panel"><summary><span>Saved summaries &amp; reconciliation</span><span id="reconciliation-status" class="quiet-label">Loading saved evidence…</span></summary><p class="accounting-note">Summaries are retained as Claude updates its cache. Confirmed main-turn remainders fill missing usage; overlapping or unresolved totals stay separate.</p><div id="reconciliation-list"></div></details>
+        <details class="panel secondary-panel"><summary><span>Source coverage</span><span id="last-collection" class="quiet-label">Checking collection status</span></summary><div id="coverage-list" class="coverage-list"></div><div class="coverage-footer"><p>Regular ChatGPT and Claude chats need a local export. Remote activity appears when recorded in local logs or caches.</p></div></details>
+        <details class="panel secondary-panel"><summary><span>Account &amp; quota evidence</span><span class="outline-tag">SEPARATE FROM TOKEN TOTALS</span></summary><div id="snapshots-list" class="snapshots-list"></div></details>
+        <details class="panel secondary-panel"><summary><span>Quota history</span><span id="quota-history-status" class="quiet-label">Loading observations…</span></summary><p class="accounting-note">Uses the provider filter, across all dates. Percentages retain their original observation time. A newer scan does not make an older percentage current.</p><div id="quota-history-list"></div></details>
+        <details class="report-explanation"><summary>How these numbers are counted</summary><div id="report-notes" class="report-notes"></div></details>
+      </div>
+    </main>
+    <footer class="app-footer"><p><span class="footer-dot" aria-hidden="true"></span>Stored locally. Reported usage and text estimates stay separate.</p><p id="refresh-status" aria-live="polite">Refreshes every 30 seconds</p></footer>
+  </div>
+  <noscript><div class="noscript-notice">Enable JavaScript to view the dashboard, or use the CLI report.</div></noscript>
+</body>
+</html>

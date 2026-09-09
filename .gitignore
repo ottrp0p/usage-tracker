@@ -1,0 +1,42 @@
+# Existing Python, build, machine and runtime exclusions
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+build/
+dist/
+.DS_Store
+*.sqlite3*
+.coverage
+
+# Additional generated test/cache files
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage.*
+htmlcov/
+
+# Local secrets, configuration, imports and runtime state
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+/.claude/settings.local.json
+/config.json
+/config.local.json
+/data/
+/imports/
+/exports/
+*.log
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+
+# Historical personal audit notes: preserve originals outside public history
+/docs/plans/2026-09-07-implementation-proposal.md
+/docs/plans/2026-09-07-build.md
+/docs/plans/2026-09-07-claude-coverage-audit.md
+/docs/plans/2026-09-07-summary-reconciliation.md
+/docs/plans/2026-09-08-codex-replayed-history.md

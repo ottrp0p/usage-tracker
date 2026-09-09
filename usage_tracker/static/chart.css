@@ -1,0 +1,99 @@
+/* Category colors are shared with the daily table. Keep the chart's selectors
+   local so the other tables and evidence panels retain their existing styles. */
+:root {
+  --input-color:#456ed6;
+  --output-color:#9365bd;
+  --cache-write-color:#d69a36;
+  --cache-read-color:#4a947f;
+  --unknown-color:#adb6bd;
+}
+
+.monthly-chart {
+  position:relative;
+  overflow:visible;
+  margin:0 20px 18px;
+  min-width:0;
+}
+.monthly-legend {
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px 24px;
+  margin:0 7px 14px;
+  color:var(--muted,#6d7770);
+  font-size:11px;
+}
+.monthly-legend-item { display:inline-flex; align-items:center; gap:7px; }
+.monthly-swatch { width:10px; height:10px; border-radius:3px; display:inline-block; flex-shrink:0; }
+.monthly-legend-unit { margin-left:auto; color:var(--muted,#6d7770); font-size:10px; }
+.monthly-chart-viewport { overflow-x:auto; overscroll-behavior-x:contain; }
+.monthly-chart-svg { display:block; width:100%; min-width:760px; height:490px; overflow:visible; }
+.monthly-chart-svg text { font-family:inherit; font-variant-numeric:tabular-nums; }
+.monthly-grid-line { stroke:#e7ebe4; stroke-width:1; }
+.monthly-axis-title { fill:var(--muted,#6d7770); font-size:9px; font-weight:650; letter-spacing:1.2px; }
+.monthly-axis-label { fill:var(--muted,#6d7770); font-size:11px; }
+.monthly-month-label { fill:#59655e; font-size:12px; font-weight:550; }
+.monthly-month-target { fill:transparent; stroke:transparent; stroke-width:1.5; }
+.monthly-month[role="button"] { cursor:pointer; }
+.monthly-month:hover .monthly-month-target { fill:#56755b08; }
+.monthly-month:focus { outline:none; }
+.monthly-month:focus-visible .monthly-month-target { fill:#456ed60a; stroke:#456ed6; }
+.monthly-month:focus .monthly-month-label,.monthly-month:hover .monthly-month-label { fill:var(--ink,#252f2b); }
+.monthly-bar-total { fill:#58665b; font-size:11px; font-weight:600; }
+.monthly-unknown-label { fill:var(--muted,#6d7770); font-size:9px; }
+.monthly-gap-marker { stroke:#bbc4bb; stroke-width:2; stroke-linecap:round; }
+.monthly-zero-marker { fill:#fff; stroke:#63736a; stroke-width:1.5; }
+.monthly-fill-input { fill:var(--input-color); background:var(--input-color); }
+.monthly-fill-output { fill:var(--output-color); background:var(--output-color); }
+.monthly-fill-cache-write { fill:var(--cache-write-color); background:var(--cache-write-color); }
+.monthly-fill-cache-read { fill:var(--cache-read-color); background:var(--cache-read-color); }
+.monthly-fill-unknown { fill:var(--unknown-color); background:var(--unknown-color); }
+.monthly-segment { transition:filter .12s; }
+.monthly-segment:hover { filter:brightness(1.12); }
+.monthly-chart-note { margin:6px 7px 0; color:var(--muted,#6d7770); font-size:10px; line-height:1.7; }
+
+/* A DOM tooltip supports exact readable counts without shrinking the chart
+   labels. SVG titles and the adjacent data table preserve a no-hover path. */
+.monthly-tooltip {
+  position:absolute;
+  z-index:4;
+  width:max-content;
+  min-width:255px;
+  max-width:min(340px,calc(100% - 16px));
+  padding:15px 17px 13px;
+  border:1px solid #dce3d7;
+  border-radius:10px;
+  background:#fffffff7;
+  color:var(--ink,#252f2b);
+  box-shadow:0 8px 28px #293d2926;
+  font-size:11px;
+  pointer-events:none;
+}
+.monthly-tooltip-heading { display:block; font-size:12px; font-weight:650; margin-bottom:9px; }
+.monthly-tooltip-values { display:grid; gap:6px; margin:0; }
+.monthly-tooltip-values>div { display:flex; justify-content:space-between; gap:24px; }
+.monthly-tooltip-values dt { color:var(--muted,#6d7770); }
+.monthly-tooltip-values dd { margin:0; font-variant-numeric:tabular-nums; text-align:right; }
+.monthly-tooltip-values .monthly-tooltip-active { font-weight:650; }
+.monthly-tooltip-values .monthly-tooltip-active dt { color:var(--ink,#252f2b); }
+.monthly-tooltip-total { margin-top:4px; padding-top:9px; border-top:1px solid #e7ebe2; font-weight:650; }
+.monthly-tooltip-values .monthly-tooltip-total dt { color:var(--ink,#252f2b); }
+.monthly-tooltip-note { margin:10px 0 0; max-width:285px; color:var(--muted,#6d7770); font-size:10px; line-height:1.55; white-space:normal; }
+.monthly-tooltip-action { margin:10px 0 0; color:var(--green,#41694d); font-size:10px; }
+.monthly-data-month { background:transparent; font-size:11px; font-weight:550; letter-spacing:0; border-top:0; }
+.monthly-data-gap td,.monthly-data-gap .monthly-data-month { color:#89918b; }
+.monthly-data-input { color:var(--input-color); }
+.monthly-data-output { color:var(--output-color); }
+.monthly-data-cache-write { color:#8d671e; }
+.monthly-data-cache-read { color:#387b68; }
+
+@media (max-width:700px) {
+  .monthly-chart { margin:0 10px 15px; }
+  .monthly-legend { margin:0 10px 10px; gap:9px 18px; font-size:10px; }
+  .monthly-legend-unit { flex-basis:100%; margin-left:0; font-size:9px; }
+  .monthly-chart-note { margin:7px 10px 0; font-size:9px; }
+  .monthly-tooltip { min-width:235px; padding:12px 14px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .monthly-segment { transition:none; }
+}
